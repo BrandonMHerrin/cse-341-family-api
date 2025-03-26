@@ -1,4 +1,6 @@
-export const fetchHouseholds = (req, res) => {
+import { createHousehold, getHousehold, getHouseholds, updateHousehold } from "../services/households.js";
+
+export const fetchHouseholds = async (req, res, next) => {
   /*
         #swagger.summary = 'Get all households.'
         #swagger.description = 'Fetches a list of all households from the database.'
@@ -8,9 +10,14 @@ export const fetchHouseholds = (req, res) => {
         }
         #swagger.responses[404]
     */
-   res.status(200).send('Hello');
+   try {
+        const households = await getHouseholds();
+        return res.status(200).json(households);
+   } catch (error) {
+        next(error);
+   }
 };
-export const fetchHousehold = (req, res) => {
+export const fetchHousehold = async (req, res, next) => {
   /*
         #swagger.summary = 'Get household by id.'
         #swagger.description = 'Fetches details of a specific household by its id.'
@@ -25,8 +32,15 @@ export const fetchHousehold = (req, res) => {
         #swagger.responses[400]
         #swagger.responses[404]
     */
+   try {
+        const {id} = req.params;
+        const household = await getHousehold(id);
+        return res.status(200).json(household);
+   } catch (error) {
+        return next(error);
+   }
 };
-export const addHousehold = (req, res) => {
+export const addHousehold = async (req, res, next) => {
   /*
         #swagger.summary = 'Create new household.'
         #swagger.description = 'Adds a new household to the database.'
@@ -42,8 +56,15 @@ export const addHousehold = (req, res) => {
         }
         #swagger.responses[400]
     */
+   try {
+        const newHousehold = req.body;
+        const newHouseholdId = await createHousehold(newHousehold);
+        return res.status(201).send(newHouseholdId);
+   } catch (error) {
+        return next(error);
+   }
 };
-export const modifyHousehold = (req, res) => {
+export const modifyHousehold = async (req, res, next) => {
   /*
         #swagger.summary = 'Modify an existing household.'
         #swagger.description = 'Updates the details of an existing household.'
@@ -63,8 +84,16 @@ export const modifyHousehold = (req, res) => {
         #swagger.responses[400]
         #swagger.responses[404]
     */
+   try {
+        const {id} = req.params;
+        const update = req.body;
+        await updateHousehold(id, update);
+        return res.status(200).send();
+   } catch (error) {
+        return next(error);
+   }
 };
-export const deleteHousehold = (req, res) => {
+export const deleteHousehold = async (req, res, next) => {
   /*
         #swagger.summary = 'Delete an existing household.'
         #swagger.description = 'Removes a household from the database.'
@@ -78,4 +107,11 @@ export const deleteHousehold = (req, res) => {
         #swagger.responses[400]
         #swagger.responses[404]
     */
+   try {
+        const {id} = req.params;
+        await deleteHousehold(id);
+        return res.status(204).send();
+   } catch (error) {
+        return next(error);
+   }
 };

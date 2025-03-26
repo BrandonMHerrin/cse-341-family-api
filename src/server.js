@@ -1,6 +1,7 @@
 import express from 'express';
 import config from './config.js';
 import appRouter from './routes/index.js'
+import errorHandler from './middleware/error-handler.js';
 
 const main = () => {
     const app = createApp();
@@ -20,6 +21,7 @@ const createApp = () => {
  * @param {Express.Application} app 
  */
 const configureMiddleware = (app) => {
+    app.use(express.json());
     console.log('Middleware configured.');
 }
 
@@ -29,6 +31,7 @@ const configureMiddleware = (app) => {
  */
 const configureRoutes = (app) => {
     app.use('/', appRouter);
+    app.use(errorHandler);
     console.log('Routes configured.');
 }
 
