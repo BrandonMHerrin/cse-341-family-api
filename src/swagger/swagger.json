@@ -1,0 +1,904 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "title": "Families API",
+    "description": "Api for CSE231 project 2.",
+    "version": "1.0.0"
+  },
+  "host": "localhost:8080",
+  "basePath": "/",
+  "schemes": [
+    "http"
+  ],
+  "paths": {
+    "/households/": {
+      "get": {
+        "tags": [
+          "Household"
+        ],
+        "summary": "Get all households.",
+        "description": "Fetches a list of all households from the database.",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "descriptoin": "A list of households.",
+            "schema": {
+              "$ref": "#/definitions/Households"
+            }
+          },
+          "401": {
+            "description": "Unauthorized. Authentication required."
+          },
+          "404": {
+            "schema": {
+              "$ref": "#/definitions/NotFound"
+            },
+            "description": "Not Found"
+          },
+          "500": {
+            "description": "Server Error",
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "Household"
+        ],
+        "summary": "Create new household.",
+        "description": "Adds a new household to the database.",
+        "parameters": [
+          {
+            "name": "New Household",
+            "in": "body",
+            "description": "New household to add",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/AddHousehold"
+            }
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "Household created successfully",
+            "schema": {
+              "type": "string",
+              "example": "3888djdjdje",
+              "xml": {
+                "name": "main"
+              }
+            }
+          },
+          "400": {
+            "schema": {
+              "$ref": "#/definitions/Errors"
+            },
+            "description": "Bad Request"
+          },
+          "401": {
+            "description": "Unauthorized. Authentication required."
+          },
+          "500": {
+            "description": "Server Error",
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          }
+        }
+      }
+    },
+    "/households/{id}": {
+      "get": {
+        "tags": [
+          "Household"
+        ],
+        "summary": "Get household by id.",
+        "description": "Fetches details of a specific household by its id.",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string",
+            "description": "Id of the household to be returned."
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "A single household.",
+            "schema": {
+              "$ref": "#/definitions/Household"
+            }
+          },
+          "400": {
+            "schema": {
+              "$ref": "#/definitions/Errors"
+            },
+            "description": "Bad Request"
+          },
+          "401": {
+            "description": "Unauthorized. Authentication required."
+          },
+          "404": {
+            "schema": {
+              "$ref": "#/definitions/NotFound"
+            },
+            "description": "Not Found"
+          },
+          "500": {
+            "description": "Server Error",
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "Household"
+        ],
+        "summary": "Modify an existing household.",
+        "description": "Updates the details of an existing household.",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string",
+            "description": "Id of the object to modify."
+          },
+          {
+            "name": "update",
+            "in": "body",
+            "required": true,
+            "description": "Object with desired changes.",
+            "schema": {
+              "$ref": "#/definitions/Household"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Household updated successfully."
+          },
+          "400": {
+            "schema": {
+              "$ref": "#/definitions/Errors"
+            },
+            "description": "Bad Request"
+          },
+          "401": {
+            "description": "Unauthorized. Authentication required."
+          },
+          "404": {
+            "schema": {
+              "$ref": "#/definitions/NotFound"
+            },
+            "description": "Not Found"
+          },
+          "500": {
+            "description": "Server Error",
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "Household"
+        ],
+        "summary": "Delete an existing household.",
+        "description": "Removes a household from the database.",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string",
+            "description": "Id of the household to delete."
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "Household deleted successfully."
+          },
+          "400": {
+            "schema": {
+              "$ref": "#/definitions/Errors"
+            },
+            "description": "Bad Request"
+          },
+          "401": {
+            "description": "Unauthorized. Authentication required."
+          },
+          "404": {
+            "schema": {
+              "$ref": "#/definitions/NotFound"
+            },
+            "description": "Not Found"
+          },
+          "500": {
+            "description": "Server Error",
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          }
+        }
+      }
+    },
+    "/events/{householdId}": {
+      "get": {
+        "tags": [
+          "Events"
+        ],
+        "summary": "Get all events.",
+        "description": "Fetches a list of all events from the database.",
+        "parameters": [
+          {
+            "name": "householdId",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "A list of events",
+            "schema": {
+              "$ref": "#/definitions/Events"
+            }
+          },
+          "401": {
+            "description": "Unauthorized. Authentication required."
+          },
+          "404": {
+            "description": "Not Found"
+          },
+          "500": {
+            "description": "Server Error",
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "Events"
+        ],
+        "summary": "Create new event.",
+        "description": "Adds a new event to the database.",
+        "parameters": [
+          {
+            "name": "householdId",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "New Event",
+            "in": "body",
+            "required": true,
+            "description": "New event to be added.",
+            "schema": {
+              "$ref": "#/definitions/AddEvent"
+            }
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "Household created successfully",
+            "schema": {
+              "type": "string",
+              "example": "sldkfh3lkdjh",
+              "xml": {
+                "name": "main"
+              }
+            }
+          },
+          "400": {
+            "schema": {
+              "$ref": "#/definitions/Errors"
+            },
+            "description": "Bad Request"
+          },
+          "401": {
+            "description": "Unauthorized. Authentication required."
+          },
+          "404": {
+            "schema": {
+              "$ref": "#/definitions/NotFound"
+            },
+            "description": "Not Found"
+          },
+          "500": {
+            "description": "Server Error",
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          }
+        }
+      }
+    },
+    "/events/{id}": {
+      "get": {
+        "tags": [
+          "Events"
+        ],
+        "summary": "Get event by id.",
+        "description": "Fetches details of a specific event by its id.",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string",
+            "description": "Id of the event to be returned."
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "A single event",
+            "schema": {
+              "$ref": "#/definitions/Event"
+            }
+          },
+          "400": {
+            "schema": {
+              "$ref": "#/definitions/Errors"
+            },
+            "description": "Bad Request"
+          },
+          "401": {
+            "description": "Unauthorized. Authentication required."
+          },
+          "404": {
+            "description": "Not Found"
+          },
+          "500": {
+            "description": "Server Error",
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "Events"
+        ],
+        "summary": "Modify an existing event.",
+        "description": "Updates the details of an existing event.",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string",
+            "descriptioin": "Id of event to modify"
+          },
+          {
+            "name": "update",
+            "in": "body",
+            "description": "Object with the desired changes",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/Event"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "400": {
+            "schema": {
+              "$ref": "#/definitions/Errors"
+            },
+            "description": "Bad Request"
+          },
+          "401": {
+            "description": "Unauthorized. Authentication required."
+          },
+          "404": {
+            "description": "Not Found"
+          },
+          "500": {
+            "description": "Server Error",
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "Events"
+        ],
+        "summary": "Delete an existing event.",
+        "description": "Removes an event from the database.",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string",
+            "description": "Id of the event to delete."
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "Event deleted successfully."
+          },
+          "400": {
+            "schema": {
+              "$ref": "#/definitions/Errors"
+            },
+            "description": "Bad Request"
+          },
+          "401": {
+            "description": "Unauthorized. Authentication required."
+          },
+          "404": {
+            "description": "Not Found"
+          },
+          "500": {
+            "description": "Server Error",
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          }
+        }
+      }
+    }
+  },
+  "definitions": {
+    "Household": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "example": "123e4567-e89b-12d3-a456-426614174000"
+        },
+        "name": {
+          "type": "string",
+          "example": "The Smith Family"
+        },
+        "address": {
+          "type": "object",
+          "properties": {
+            "street1": {
+              "type": "string",
+              "example": "123 Main St"
+            },
+            "street2": {
+              "type": "string",
+              "example": "Apt 4B"
+            },
+            "city": {
+              "type": "string",
+              "example": "Somewhere"
+            },
+            "state": {
+              "type": "string",
+              "example": "CA"
+            },
+            "zipCode": {
+              "type": "string",
+              "example": "90210"
+            },
+            "country": {
+              "type": "string",
+              "example": "USA"
+            }
+          }
+        },
+        "members": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "id": {
+                "type": "string",
+                "example": "2"
+              },
+              "firstName": {
+                "type": "string",
+                "example": "Jane"
+              },
+              "lastName": {
+                "type": "string",
+                "example": "Smith"
+              },
+              "email": {
+                "type": "string",
+                "example": "jane.smith@example.com"
+              },
+              "role": {
+                "type": "string",
+                "example": "child"
+              }
+            }
+          }
+        },
+        "createdBy": {
+          "type": "string",
+          "example": "admin@example.com"
+        },
+        "createdAt": {
+          "type": "string",
+          "example": "2025-01-01T12:00:00Z"
+        },
+        "updatedAt": {
+          "type": "string",
+          "example": "2025-01-02T15:30:00Z"
+        },
+        "phoneNumber": {
+          "type": "string",
+          "example": "+1-555-123-4567"
+        },
+        "email": {
+          "type": "string",
+          "example": "smith.family@example.com"
+        },
+        "notes": {
+          "type": "string",
+          "example": "This household prefers email communication."
+        },
+        "status": {
+          "type": "string",
+          "example": "active"
+        }
+      }
+    },
+    "Households": {
+      "type": "array",
+      "items": {
+        "$ref": "#/definitions/Household"
+      }
+    },
+    "AddHousehold": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string",
+          "example": "The Smith Family"
+        },
+        "address": {
+          "type": "object",
+          "properties": {
+            "street1": {
+              "type": "string",
+              "example": "123 Main St"
+            },
+            "street2": {
+              "type": "string",
+              "example": "Apt 4B"
+            },
+            "city": {
+              "type": "string",
+              "example": "Somewhere"
+            },
+            "state": {
+              "type": "string",
+              "example": "CA"
+            },
+            "zipCode": {
+              "type": "string",
+              "example": "90210"
+            },
+            "country": {
+              "type": "string",
+              "example": "USA"
+            }
+          },
+          "required": [
+            "street1",
+            "street2",
+            "city",
+            "state",
+            "zipCode",
+            "country"
+          ]
+        },
+        "members": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "id": {
+                "type": "string",
+                "example": "2"
+              },
+              "firstName": {
+                "type": "string",
+                "example": "Jane"
+              },
+              "lastName": {
+                "type": "string",
+                "example": "Smith"
+              },
+              "email": {
+                "type": "string",
+                "example": "jane.smith@example.com"
+              },
+              "role": {
+                "type": "string",
+                "example": "child"
+              }
+            },
+            "required": [
+              "id",
+              "firstName",
+              "lastName",
+              "email",
+              "role"
+            ]
+          }
+        },
+        "phoneNumber": {
+          "type": "string",
+          "example": "+1-555-123-4567"
+        },
+        "email": {
+          "type": "string",
+          "example": "smith.family@example.com"
+        },
+        "notes": {
+          "type": "string",
+          "example": "This household prefers email communication."
+        },
+        "status": {
+          "type": "string",
+          "example": "active"
+        }
+      },
+      "required": [
+        "name",
+        "address",
+        "members",
+        "phoneNumber",
+        "email",
+        "notes",
+        "status"
+      ]
+    },
+    "Event": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "example": "123e4567-e89b-12d3-a456-426614174000"
+        },
+        "eventTitle": {
+          "type": "string",
+          "example": "John's Birthday"
+        },
+        "description": {
+          "type": "string",
+          "example": "A surprise birthday party for John."
+        },
+        "notes": {
+          "type": "string",
+          "example": "Don't forget to bring the cake!"
+        },
+        "category": {
+          "type": "string",
+          "example": "birthday"
+        },
+        "eventDate": {
+          "type": "string",
+          "example": "2025-01-01"
+        },
+        "startTime": {
+          "type": "string",
+          "example": "2025-01-01T17:00:00Z"
+        },
+        "endTime": {
+          "type": "string",
+          "example": "2025-01-01T20:00:00Z"
+        },
+        "isAllDay": {
+          "type": "boolean",
+          "example": false
+        },
+        "status": {
+          "type": "string",
+          "example": "scheduled"
+        },
+        "attendees": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "firstName": {
+                "type": "string",
+                "example": "Jane"
+              },
+              "lastName": {
+                "type": "string",
+                "example": "Doe"
+              }
+            }
+          }
+        },
+        "location": {
+          "type": "object",
+          "properties": {
+            "street1": {
+              "type": "string",
+              "example": "123 Street"
+            },
+            "street2": {
+              "type": "string",
+              "example": "apt 404"
+            },
+            "city": {
+              "type": "string",
+              "example": "Somewhere"
+            },
+            "state": {
+              "type": "string",
+              "example": "New State"
+            }
+          }
+        },
+        "createdBy": {
+          "type": "string",
+          "example": "John Doe"
+        },
+        "created": {
+          "type": "string",
+          "example": "2025-01-01T17:00:00Z"
+        },
+        "updated": {
+          "type": "string",
+          "example": "2025-01-01T18:00:00Z"
+        }
+      }
+    },
+    "Events": {
+      "type": "array",
+      "items": {
+        "$ref": "#/definitions/Event"
+      }
+    },
+    "AddEvent": {
+      "type": "object",
+      "properties": {
+        "eventTitle": {
+          "type": "string",
+          "example": "John's Birthday"
+        },
+        "description": {
+          "type": "string",
+          "example": "A surprise birthday party for John."
+        },
+        "notes": {
+          "type": "string",
+          "example": "Don't forget to bring the cake!"
+        },
+        "category": {
+          "type": "string",
+          "example": "birthday"
+        },
+        "eventDate": {
+          "type": "string",
+          "example": "2025-01-01"
+        },
+        "startTime": {
+          "type": "string",
+          "example": "2025-01-01T17:00:00Z"
+        },
+        "endTime": {
+          "type": "string",
+          "example": "2025-01-01T20:00:00Z"
+        },
+        "isAllDay": {
+          "type": "boolean",
+          "example": false
+        },
+        "status": {
+          "type": "string",
+          "example": "scheduled"
+        },
+        "attendees": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "firstName": {
+                "type": "string",
+                "example": "Jane"
+              },
+              "lastName": {
+                "type": "string",
+                "example": "Doe"
+              }
+            },
+            "required": [
+              "firstName",
+              "lastName"
+            ]
+          }
+        },
+        "location": {
+          "type": "object",
+          "properties": {
+            "street1": {
+              "type": "string",
+              "example": "123 Street"
+            },
+            "street2": {
+              "type": "string",
+              "example": "apt 404"
+            },
+            "city": {
+              "type": "string",
+              "example": "Somewhere"
+            },
+            "state": {
+              "type": "string",
+              "example": "New State"
+            }
+          },
+          "required": [
+            "street1",
+            "street2",
+            "city",
+            "state"
+          ]
+        }
+      },
+      "required": [
+        "eventTitle",
+        "description",
+        "notes",
+        "category",
+        "eventDate",
+        "startTime",
+        "endTime",
+        "isAllDay",
+        "status",
+        "attendees",
+        "location"
+      ]
+    },
+    "NotFound": {
+      "type": "object",
+      "properties": {
+        "error": {
+          "type": "string",
+          "example": "Resource not found."
+        }
+      }
+    },
+    "Error": {
+      "type": "object",
+      "properties": {
+        "error": {
+          "type": "string",
+          "example": "An error occurred."
+        }
+      }
+    },
+    "Errors": {
+      "type": "array",
+      "items": {
+        "$ref": "#/definitions/Error"
+      }
+    },
+    "Unauthorized": {
+      "type": "object",
+      "properties": {
+        "error": {
+          "type": "string",
+          "example": "Unauthorized. Failed to authenticate."
+        }
+      }
+    }
+  }
+}
