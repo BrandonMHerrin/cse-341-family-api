@@ -1,9 +1,11 @@
+import { createEvent, getEvent, getEvents, removeEvent, updateEvent } from "../services/events.js";
+
 /**
  * Controller to handle requests to fetch all events.
  * @param {Express.Request} req
  * @param {Express.Response} res
  */
-export const fetchEvents = (req, res) => {
+export const fetchEvents = async (req, res, next) => {
   /*
         #swagger.summary = 'Get all events.'
         #swagger.description = 'Fetches a list of all events from the database.'
@@ -13,8 +15,13 @@ export const fetchEvents = (req, res) => {
         }
         #swagger.responses[404]
     */
-  console.log("Request received.");
-  res.status(200).send();
+  try {
+    const {householdId} = req.params;
+    const events = await getEvents(householdId);
+    res.status(200).json(events);
+  } catch (error) {
+    return next(error);
+  }
 };
 
 /**
@@ -22,7 +29,7 @@ export const fetchEvents = (req, res) => {
  * @param {Express.Request} req
  * @param {Express.Response} res
  */
-export const fetchEvent = (req, res) => {
+export const fetchEvent = async (req, res, next) => {
   /*
         #swagger.summary = 'Get event by id.'
         #swagger.description = 'Fetches details of a specific event by its id.'
@@ -36,7 +43,13 @@ export const fetchEvent = (req, res) => {
         }
         #swagger.responses[404]
     */
-  res.status(200).send();
+  try {
+    const {id} = req.params;
+    const event = await getEvent(id);
+    return res.status(200).json(event);
+  } catch (error) {
+    return next(error);
+  }
 };
 
 /**
@@ -44,7 +57,7 @@ export const fetchEvent = (req, res) => {
  * @param {Express.Request} req
  * @param {Express.Response} res
  */
-export const addEvent = (req, res) => {
+export const addEvent = async (req, res, next) => {
   /*
         #swagger.summary = 'Create new event.'
         #swagger.description = 'Adds a new event to the database.'
@@ -59,7 +72,13 @@ export const addEvent = (req, res) => {
             schema: 'sldkfh3lkdjh'
         }
     */
-  res.status(201).send();
+  try {
+    const newEvent = req.body;
+    const newEventId = await createEvent(newEvent);
+    return res.status(201).send(newEventId);
+  } catch (error) {
+    return next(error);
+  }
 };
 
 /**
@@ -67,7 +86,7 @@ export const addEvent = (req, res) => {
  * @param {Express.Request} req
  * @param {Express.Response} res
  */
-export const modifyEvent = (req, res) => {
+export const modifyEvent = async (req, res, next) => {
   /*
         #swagger.summary = 'Modify an existing event.'
         #swagger.description = 'Updates the details of an existing event.'
@@ -83,7 +102,14 @@ export const modifyEvent = (req, res) => {
         }
         #swagger.responses[404]
     */
-  res.status(200).send();
+  try {
+    const {id} = req.params;
+    const update = req.body;
+    await updateEvent(id, update);
+    return res.status(200).send();
+  } catch (error) {
+    return next(error);
+  }
 };
 
 /**
@@ -91,7 +117,7 @@ export const modifyEvent = (req, res) => {
  * @param {Express.Request} req
  * @param {Express.Response} res
  */
-export const deleteEvent = (req, res) => {
+export const deleteEvent = async (req, res, next) => {
   /*
         #swagger.summary = 'Delete an existing event.'
         #swagger.description = 'Removes an event from the database.'
@@ -104,5 +130,11 @@ export const deleteEvent = (req, res) => {
         }
         #swagger.responses[404]
     */
-  res.status(204).send();
+  try {
+    const {id} = req.params;
+    await removeEvent(id);
+    return res.status(204).send();
+  } catch (error) {
+    return next(error);
+  }
 };

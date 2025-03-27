@@ -6,4 +6,4 @@ export const createHousehold = async (household) => {}
 
 export const updateHousehold = async (id, update) => {}
 
-export const deleteHousehold = async (id) => {}
+export const removeHousehold = async (id) => {}

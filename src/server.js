@@ -18,7 +18,7 @@ const createApp = () => {
 
 /**
  * 
- * @param {Express.Application} app 
+ * @param {Express} app 
  */
 const configureMiddleware = (app) => {
     app.use(express.json());

@@ -1,4 +1,4 @@
-import { createHousehold, getHousehold, getHouseholds, updateHousehold } from "../services/households.js";
+import { createHousehold, getHousehold, getHouseholds, removeHousehold, updateHousehold } from "../services/households.js";
 
 export const fetchHouseholds = async (req, res, next) => {
   /*
@@ -109,7 +109,7 @@ export const deleteHousehold = async (req, res, next) => {
     */
    try {
         const {id} = req.params;
-        await deleteHousehold(id);
+        await removeHousehold(id);
         return res.status(204).send();
    } catch (error) {
         return next(error);
