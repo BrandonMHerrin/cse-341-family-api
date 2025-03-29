@@ -1,4 +1,4 @@
-import { Db, MongoClient } from "mongodb";
+import { Collection, Db, MongoClient } from "mongodb";
 import config from "./config.js";
 
 const {url} = config.mongo;
@@ -6,14 +6,19 @@ const client = new MongoClient(url);
 
 let db;
 
+let eventsCollection;
+let householdsCollection;
+
 export const connectDb = async () => {
     try {
         if (!db) {
             await client.connect();
             db = client.db('families');
+            eventsCollection = db.collection('events');
+            householdsCollection = db.collection('households');
             console.log('Connected to Database.')
         }
-        return db;
+        return;
     } catch (error) {
         console.error('Failed to connect to database', error);
         throw error;
@@ -22,11 +27,22 @@ export const connectDb = async () => {
 
 /**
  * 
- * @returns {Db} db
+ * @returns {Collection} eventsCollection
  */
-export const getDb = () => {
-    if (!db) {
-        throw new Error('Dababase not connected. Call connectDB first.');
+export const eventsCol = () => {
+    if (!eventsCollection) {
+        throw Error('Events collection not loaded.');
     }
-    return db;
+    return eventsCollection;
+}
+
+/**
+ * 
+ * @returns {Collection} householdsCollection
+ */
+export const householdsCol = () => {
+    if (!householdsCollection) {
+        throw Error('Households collection not loaded.');
+    }
+    return householdsCollection
 }

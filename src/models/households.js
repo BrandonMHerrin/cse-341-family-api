@@ -1,10 +1,8 @@
 import { ObjectId } from "mongodb";
-import { getDb } from "../config/db";
-
-const col = getDb().collection('households');
+import { householdsCol } from "../config/db.js";
 
 export const getAllHouseholdDocuments = async () => {
-    return await col.find().toArray();
+    return await householdsCol().find().toArray();
 }
 
 /**
@@ -13,7 +11,11 @@ export const getAllHouseholdDocuments = async () => {
  * @returns 
  */
 export const getHouseholdDocument = async (id) => {
-    return await col.findOne({_id: new ObjectId(id )});
+    const doc = await householdsCol().findOne({_id: new ObjectId(id )});
+    if (!doc) {
+        throw new Error('Document not found.');
+    }
+    return doc;
 }
 
 /**
@@ -22,7 +24,11 @@ export const getHouseholdDocument = async (id) => {
  * @returns 
  */
 export const createHouseholdDocument = async (newHousehold) => {
-    return (await col.insertOne(newHousehold)).insertedId;
+    const newHouseholdId = (await householdsCol().insertOne(newHousehold)).insertedId;
+    if (!newHouseholdId) {
+        throw new Error('Failed to create new household.');
+    }
+    return newHouseholdId;
 }
 
 /**
@@ -32,7 +38,11 @@ export const createHouseholdDocument = async (newHousehold) => {
  * @returns 
  */
 export const updateHouseholdDocument = async (id, update) => {
-    return await col.updateOne({_id: new ObjectId(id)}, update);
+    const result = await householdsCol().updateOne({_id: new ObjectId(id)}, update);
+    if (result.modifiedCount !== 1) {
+        throw new Error('Failed to modify document');
+    }
+    return;
 }
 
 /**
@@ -41,5 +51,9 @@ export const updateHouseholdDocument = async (id, update) => {
  * @returns 
  */
 export const deleteHouseholdDocument = async (id) => {
-    return await col.deleteOne({_id: new ObjectId(id)});
+    const result = await householdsCol().deleteOne({_id: new ObjectId(id)});
+    if (result.deletedCount !== 1) {
+        throw new Error('Failed to delte document.');
+    }
+    return;
 }

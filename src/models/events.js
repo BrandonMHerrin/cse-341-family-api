@@ -1,15 +1,12 @@
 import { ObjectId } from "mongodb";
-import { getDb } from "../config/db.js";
-
-const col = getDb().collection('events');
-
+import { eventsCol } from "../config/db.js";
 /**
  * 
  * @param {string} householdId 
  * @returns 
  */
 export const getAllEventDocuments = async (householdId) => {
-    return await col.find({householdId: new ObjectId(householdId)}).toArray();
+    return await eventsCol().find({householdId: new ObjectId(householdId)}).toArray();
 }
 
 /**
@@ -18,7 +15,7 @@ export const getAllEventDocuments = async (householdId) => {
  * @returns 
  */
 export const getEventDocument = async (id) => {
-    return await col.findOne({ _id: new ObjectId(id)});
+    return await eventsCol().findOne({ _id: new ObjectId(id)});
 }
 
 /**
@@ -27,7 +24,7 @@ export const getEventDocument = async (id) => {
  * @returns 
  */
 export const createEventDocument = async (newEvent) => {
-    return (await col.insertOne(newEvent)).insertedId
+    return (await eventsCol().insertOne(newEvent)).insertedId
 }
 
 /**
@@ -37,7 +34,7 @@ export const createEventDocument = async (newEvent) => {
  * @returns 
  */
 export const updateEventDocument = async (id, update) => {
-    return await col.updateOne({_id: new ObjectId(id)}, update);
+    return await eventsCol().updateOne({_id: new ObjectId(id)}, update);
 }
 
 /**
@@ -46,5 +43,5 @@ export const updateEventDocument = async (id, update) => {
  * @returns 
  */
 export const deleteEventDocument = async (id) => {
-    return await col.deleteOne({_id: new ObjectId(id)});
+    return await eventsCol().deleteOne({_id: new ObjectId(id)});
 }

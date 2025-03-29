@@ -46,7 +46,7 @@ export const addHouseholdValidationRules = () => {
     body("phoneNumber")
       .trim()
       .optional()
-      .isMobilePhone("en-US")
+      .isMobilePhone("en-US", {strictMode: false})
       .withMessage("Invalid phone number"),
     body("address.street1")
       .trim()
@@ -85,7 +85,7 @@ export const updateHouseholdValidationRules = () => {
     body("phoneNumber")
       .optional()
       .trim()
-      .isMobilePhone("en-US")
+      .isMobilePhone("en-US", {strictMode: false})
       .withMessage("Invalid phone number"),
     body("address.street1")
       .optional()

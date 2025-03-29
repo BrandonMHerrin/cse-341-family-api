@@ -5,14 +5,15 @@ import errorHandler from './middleware/error-handler.js';
 import { connectDb } from './config/db.js';
 
 const main = async () => {
+    await initializeDbConnection();
     const app = await createApp();
     const port = config.server.port;
     startServer(app, port);
 };
 
+
 const createApp = async () => {
     const app = express();
-    await initializeDbConnection();
     configureMiddleware(app);
     configureRoutes(app);
     return app;
