@@ -38,7 +38,7 @@ export const createHouseholdDocument = async (newHousehold) => {
  * @returns 
  */
 export const updateHouseholdDocument = async (id, update) => {
-    const result = await householdsCol().updateOne({_id: new ObjectId(id)}, update);
+    const result = await householdsCol().updateOne({_id: new ObjectId(id)}, {$set:update});
     if (result.modifiedCount !== 1) {
         throw new Error('Failed to modify document');
     }

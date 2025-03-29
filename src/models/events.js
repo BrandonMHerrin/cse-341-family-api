@@ -34,7 +34,7 @@ export const createEventDocument = async (newEvent) => {
  * @returns 
  */
 export const updateEventDocument = async (id, update) => {
-    return await eventsCol().updateOne({_id: new ObjectId(id)}, update);
+    return await eventsCol().updateOne({_id: new ObjectId(id)}, {$set:update});
 }
 
 /**
