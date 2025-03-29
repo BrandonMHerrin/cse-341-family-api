@@ -251,54 +251,6 @@
               "$ref": "#/definitions/Events"
             }
           },
-          "401": {
-            "description": "Unauthorized. Authentication required."
-          },
-          "404": {
-            "description": "Not Found"
-          },
-          "500": {
-            "description": "Server Error",
-            "schema": {
-              "$ref": "#/definitions/Error"
-            }
-          }
-        }
-      },
-      "post": {
-        "tags": [
-          "Events"
-        ],
-        "summary": "Create new event.",
-        "description": "Adds a new event to the database.",
-        "parameters": [
-          {
-            "name": "householdId",
-            "in": "path",
-            "required": true,
-            "type": "string"
-          },
-          {
-            "name": "New Event",
-            "in": "body",
-            "required": true,
-            "description": "New event to be added.",
-            "schema": {
-              "$ref": "#/definitions/AddEvent"
-            }
-          }
-        ],
-        "responses": {
-          "201": {
-            "description": "Household created successfully",
-            "schema": {
-              "type": "string",
-              "example": "sldkfh3lkdjh",
-              "xml": {
-                "name": "main"
-              }
-            }
-          },
           "400": {
             "schema": {
               "$ref": "#/definitions/Errors"
@@ -309,9 +261,6 @@
             "description": "Unauthorized. Authentication required."
           },
           "404": {
-            "schema": {
-              "$ref": "#/definitions/NotFound"
-            },
             "description": "Not Found"
           },
           "500": {
@@ -453,6 +402,59 @@
           }
         }
       }
+    },
+    "/events/": {
+      "post": {
+        "tags": [
+          "Events"
+        ],
+        "summary": "Create new event.",
+        "description": "Adds a new event to the database.",
+        "parameters": [
+          {
+            "name": "New Event",
+            "in": "body",
+            "required": true,
+            "description": "New event to be added.",
+            "schema": {
+              "$ref": "#/definitions/AddEvent"
+            }
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "Household created successfully",
+            "schema": {
+              "type": "string",
+              "example": "sldkfh3lkdjh",
+              "xml": {
+                "name": "main"
+              }
+            }
+          },
+          "400": {
+            "schema": {
+              "$ref": "#/definitions/Errors"
+            },
+            "description": "Bad Request"
+          },
+          "401": {
+            "description": "Unauthorized. Authentication required."
+          },
+          "404": {
+            "schema": {
+              "$ref": "#/definitions/NotFound"
+            },
+            "description": "Not Found"
+          },
+          "500": {
+            "description": "Server Error",
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          }
+        }
+      }
     }
   },
   "definitions": {
@@ -538,7 +540,7 @@
         },
         "phoneNumber": {
           "type": "string",
-          "example": "+1-555-123-4567"
+          "example": "+1-555-529-4567"
         },
         "email": {
           "type": "string",
@@ -641,7 +643,7 @@
         },
         "phoneNumber": {
           "type": "string",
-          "example": "+1-555-123-4567"
+          "example": "+1-555-529-4567"
         },
         "email": {
           "type": "string",
@@ -666,12 +668,25 @@
         "status"
       ]
     },
+    "UpdateHousehold": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string",
+          "example": "The Doe Family"
+        }
+      }
+    },
     "Event": {
       "type": "object",
       "properties": {
         "id": {
           "type": "string",
-          "example": "123e4567-e89b-12d3-a456-426614174000"
+          "example": "67e827875485321fa7f8fe99"
+        },
+        "householdId": {
+          "type": "string",
+          "example": "67e827875485321fa7f8fe85"
         },
         "eventTitle": {
           "type": "string",
@@ -769,6 +784,10 @@
     "AddEvent": {
       "type": "object",
       "properties": {
+        "householdId": {
+          "type": "string",
+          "example": "67e827875485321fa7f8fe85"
+        },
         "eventTitle": {
           "type": "string",
           "example": "John's Birthday"
@@ -854,6 +873,7 @@
         }
       },
       "required": [
+        "householdId",
         "eventTitle",
         "description",
         "notes",
@@ -866,6 +886,15 @@
         "attendees",
         "location"
       ]
+    },
+    "UpdateEvent": {
+      "type": "object",
+      "properties": {
+        "notes": {
+          "type": "string",
+          "example": "Test note."
+        }
+      }
     },
     "NotFound": {
       "type": "object",

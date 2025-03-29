@@ -6,7 +6,7 @@ import { eventsCol } from "../config/db.js";
  * @returns 
  */
 export const getAllEventDocuments = async (householdId) => {
-    return await eventsCol().find({householdId: new ObjectId(householdId)}).toArray();
+    return eventsCol().find({householdId: new ObjectId(householdId)}).toArray();
 }
 
 /**
@@ -15,7 +15,7 @@ export const getAllEventDocuments = async (householdId) => {
  * @returns 
  */
 export const getEventDocument = async (id) => {
-    return await eventsCol().findOne({ _id: new ObjectId(id)});
+    return eventsCol().findOne({ _id: new ObjectId(id)});
 }
 
 /**
@@ -34,7 +34,7 @@ export const createEventDocument = async (newEvent) => {
  * @returns 
  */
 export const updateEventDocument = async (id, update) => {
-    return await eventsCol().updateOne({_id: new ObjectId(id)}, {$set:update});
+    return eventsCol().updateOne({_id: new ObjectId(id)}, {$set:update});
 }
 
 /**
@@ -43,5 +43,5 @@ export const updateEventDocument = async (id, update) => {
  * @returns 
  */
 export const deleteEventDocument = async (id) => {
-    return await eventsCol().deleteOne({_id: new ObjectId(id)});
+    return eventsCol().deleteOne({_id: new ObjectId(id)});
 }

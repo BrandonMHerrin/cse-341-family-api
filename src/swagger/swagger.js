@@ -1,5 +1,6 @@
 import swaggerAutogen from "swagger-autogen";
-import config from "../config.js";
+import config from "../config/config.js";
+import { updateEvent } from "../services/events.js";
 
 const doc = {
   info: {
@@ -76,8 +77,12 @@ const doc = {
       $notes: "This household prefers email communication.",
       $status: "active",
     },
+    UpdateHousehold: {
+      name: "The Doe Family"
+    },
     Event: {
-      id: "123e4567-e89b-12d3-a456-426614174000",
+      id: "67e827875485321fa7f8fe99",
+      householdId: "67e827875485321fa7f8fe85",
       eventTitle: "John's Birthday",
       description: "A surprise birthday party for John.",
       notes: "Don't forget to bring the cake!",
@@ -105,6 +110,7 @@ const doc = {
     },
     Events: [{ $ref: "#/definitions/Event" }],
     AddEvent: {
+      $householdId: "67e827875485321fa7f8fe85",
       $eventTitle: "John's Birthday",
       $description: "A surprise birthday party for John.",
       $notes: "Don't forget to bring the cake!",
@@ -127,15 +133,16 @@ const doc = {
         $state: "New State",
       },
     },
+    UpdateEvent: {
+      notes: "Test note."
+    },
     NotFound: {
       error: "Resource not found.",
     },
     Error: {
       error: "An error occurred.",
     },
-    Errors: [
-      {$ref: '#/definitions/Error'}
-    ],
+    Errors: [{ $ref: "#/definitions/Error" }],
     Unauthorized: {
       error: "Unauthorized. Failed to authenticate.",
     },

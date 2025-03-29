@@ -126,6 +126,10 @@ export const updateHouseholdValidationRules = () => {
 
 export const addEventValidationRules = () => {
   return [
+    body("householdId")
+      .trim()
+      .isMongoId()
+      .withMessage("Invalid Household Id provided."),
     body("eventTitle")
       .trim()
       .notEmpty()

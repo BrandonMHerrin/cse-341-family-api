@@ -17,7 +17,7 @@ eventRouter.get('/:id', basicIdValidationRule(), validate, fetchEvent);
 /**
  * Route to create new events.
  */
-eventRouter.post('/:householdId', addEventValidationRules(), validate, addEvent);
+eventRouter.post('/', addEventValidationRules(), validate, addEvent);
 
 /**
  * Route for modifying existing events.
