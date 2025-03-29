@@ -6,7 +6,9 @@ import { eventsCol } from "../config/db.js";
  * @returns 
  */
 export const getAllEventDocuments = async (householdId) => {
-    return eventsCol().find({householdId: new ObjectId(householdId)}).toArray();
+    return eventsCol()
+      .find({ householdId: householdId })
+      .toArray();
 }
 
 /**

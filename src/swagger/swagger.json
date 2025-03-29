@@ -155,7 +155,7 @@
             "required": true,
             "description": "Object with desired changes.",
             "schema": {
-              "$ref": "#/definitions/Household"
+              "$ref": "#/definitions/UpdateHousehold"
             }
           }
         ],
@@ -229,7 +229,7 @@
         }
       }
     },
-    "/events/{householdId}": {
+    "/events/household/{householdId}": {
       "get": {
         "tags": [
           "Events"
@@ -335,7 +335,7 @@
             "description": "Object with the desired changes",
             "required": true,
             "schema": {
-              "$ref": "#/definitions/Event"
+              "$ref": "#/definitions/UpdateEvent"
             }
           }
         ],

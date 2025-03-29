@@ -98,7 +98,7 @@ export const modifyEvent = async (req, res, next) => {
             in: 'body', 
             description: 'Object with the desired changes',
             required: true,
-            schema: {$ref: '#/definitions/Event'}
+            schema: {$ref: '#/definitions/UpdateEvent'}
         }
         #swagger.responses[404]
     */

@@ -76,7 +76,7 @@ export const modifyHousehold = async (req, res, next) => {
             in: 'body',
             required: true,
             description: 'Object with desired changes.',
-            schema: {$ref: '#/definitions/Household'}
+            schema: {$ref: '#/definitions/UpdateHousehold'}
         }
         #swagger.responses[200] = {
             description: 'Household updated successfully.'

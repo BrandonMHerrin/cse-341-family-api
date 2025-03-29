@@ -1,13 +1,13 @@
 import express from 'express';
 import { addEvent, deleteEvent, fetchEvent, fetchEvents, modifyEvent } from '../controllers/events.js';
-import { addEventValidationRules, addHouseholdValidationRules, basicIdValidationRule, updateEventValidationRules, validate } from '../middleware/validator.js';
+import { addEventValidationRules, addHouseholdValidationRules, basicIdValidationRule, getEventsValidationRule, updateEventValidationRules, validate } from '../middleware/validator.js';
 
 const eventRouter = express.Router();
 
 /**
  * Route to return all events.
  */
-eventRouter.get('/:householdId', basicIdValidationRule(), validate, fetchEvents);
+eventRouter.get('/household/:householdId', getEventsValidationRule(), validate, fetchEvents);
 
 /**
  * Route to return a single event by id.

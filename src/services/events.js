@@ -11,6 +11,7 @@ export const getEvent = async (eventId) => {
     if (!event) {
         throw new NotFoundError("Event not found.");
     }
+    return event;
 };
 export const createEvent = async (newEvent) => {
     const householdId = newEvent.householdId;

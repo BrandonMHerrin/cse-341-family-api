@@ -25,9 +25,19 @@ export const validate = (req, res, next) => {
 export const basicIdValidationRule = () => {
     return [
         param('id')
+          .trim()
           .isMongoId()
           .withMessage('Invalid Id provided')
     ];
+}
+
+export const getEventsValidationRule = () => {
+  return [
+    param("householdId")
+      .trim()
+      .isMongoId()
+      .withMessage("Invalid household id provided.")
+  ];
 }
 
 export const addHouseholdValidationRules = () => {
