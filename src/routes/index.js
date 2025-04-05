@@ -2,6 +2,8 @@ import express from 'express';
 import swaggerRouter from './swagger.js'
 import eventRouter from './events.js';
 import householdRouter from './households.js';
+import authRouter from './auth.js';
+import { handleDefaultGet } from '../controllers/index.js';
 
 const router = express.Router();
 
@@ -51,5 +53,12 @@ router.use(
         }
     */
 );
+
+router.use(
+    '/auth',
+    authRouter
+)
+
+router.use("/", handleDefaultGet);
 
 export default router;

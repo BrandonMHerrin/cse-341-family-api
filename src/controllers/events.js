@@ -71,6 +71,7 @@ export const addEvent = async (req, res, next) => {
             description: 'Household created successfully',
             schema: 'sldkfh3lkdjh'
         }
+        #swagger.responses[401]
     */
   try {
     const newEvent = req.body;
@@ -100,6 +101,7 @@ export const modifyEvent = async (req, res, next) => {
             required: true,
             schema: {$ref: '#/definitions/UpdateEvent'}
         }
+        #swagger.responses[401]
         #swagger.responses[404]
     */
   try {
@@ -128,6 +130,7 @@ export const deleteEvent = async (req, res, next) => {
         #swagger.responses[204] = {
             description: 'Event deleted successfully.'
         }
+        #swagger.responses[401]
         #swagger.responses[404]
     */
   try {

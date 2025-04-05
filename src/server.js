@@ -3,6 +3,8 @@ import config from './config/config.js';
 import appRouter from './routes/index.js'
 import errorHandler from './middleware/error-handler.js';
 import { connectDb } from './config/db.js';
+import loadSession from './config/session.js';
+import passport from './config/auth.js';
 
 const main = async () => {
     await initializeDbConnection();
@@ -33,8 +35,11 @@ const initializeDbConnection = async () => {
  * @param {Express} app 
  */
 const configureMiddleware = (app) => {
-    app.use(express.json());
-    console.log('Middleware configured.');
+  app.use(express.json());
+  loadSession(app);
+  app.use(passport.initialize());
+  app.use(passport.session());
+  console.log('Middleware configured.');
 }
 
 /**

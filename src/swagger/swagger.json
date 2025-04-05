@@ -78,7 +78,7 @@
             "description": "Bad Request"
           },
           "401": {
-            "description": "Unauthorized. Authentication required."
+            "description": "Unauthorized"
           },
           "500": {
             "description": "Server Error",
@@ -170,7 +170,7 @@
             "description": "Bad Request"
           },
           "401": {
-            "description": "Unauthorized. Authentication required."
+            "description": "Unauthorized"
           },
           "404": {
             "schema": {
@@ -212,7 +212,7 @@
             "description": "Bad Request"
           },
           "401": {
-            "description": "Unauthorized. Authentication required."
+            "description": "Unauthorized"
           },
           "404": {
             "schema": {
@@ -350,7 +350,7 @@
             "description": "Bad Request"
           },
           "401": {
-            "description": "Unauthorized. Authentication required."
+            "description": "Unauthorized"
           },
           "404": {
             "description": "Not Found"
@@ -389,7 +389,7 @@
             "description": "Bad Request"
           },
           "401": {
-            "description": "Unauthorized. Authentication required."
+            "description": "Unauthorized"
           },
           "404": {
             "description": "Not Found"
@@ -439,7 +439,7 @@
             "description": "Bad Request"
           },
           "401": {
-            "description": "Unauthorized. Authentication required."
+            "description": "Unauthorized"
           },
           "404": {
             "schema": {
@@ -452,6 +452,36 @@
             "schema": {
               "$ref": "#/definitions/Error"
             }
+          }
+        }
+      }
+    },
+    "/auth/github": {
+      "get": {
+        "description": "",
+        "responses": {
+          "default": {
+            "description": ""
+          }
+        }
+      }
+    },
+    "/auth/github/callback": {
+      "get": {
+        "description": "",
+        "responses": {
+          "default": {
+            "description": ""
+          }
+        }
+      }
+    },
+    "/auth/logout": {
+      "get": {
+        "description": "",
+        "responses": {
+          "500": {
+            "description": "Internal Server Error"
           }
         }
       }

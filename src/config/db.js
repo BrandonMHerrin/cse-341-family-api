@@ -8,6 +8,7 @@ let db;
 
 let eventsCollection;
 let householdsCollection;
+let usersCollection;
 
 export const connectDb = async () => {
     try {
@@ -16,6 +17,7 @@ export const connectDb = async () => {
             db = client.db('families');
             eventsCollection = db.collection('events');
             householdsCollection = db.collection('households');
+            usersCollection = db.collection('users');
             console.log('Connected to Database.')
         }
         return;
@@ -44,5 +46,16 @@ export const householdsCol = () => {
     if (!householdsCollection) {
         throw Error('Households collection not loaded.');
     }
-    return householdsCollection
+    return householdsCollection;
+}
+
+/**
+ * 
+ * @returns {Collection} usersCollection
+ */
+export const usersCol = () => {
+    if(!usersCollection) {
+        throw Error("Users collection not loaded.");
+    }
+    return usersCollection;
 }

@@ -55,6 +55,7 @@ export const addHousehold = async (req, res, next) => {
             schema: '3888djdjdje'
         }
         #swagger.responses[400]
+        #swagger.responses[401]
     */
    try {
         const newHousehold = req.body;
@@ -82,6 +83,7 @@ export const modifyHousehold = async (req, res, next) => {
             description: 'Household updated successfully.'
         }
         #swagger.responses[400]
+        #swagger.responses[401]
         #swagger.responses[404]
     */
    try {
@@ -105,6 +107,7 @@ export const deleteHousehold = async (req, res, next) => {
             description: 'Household deleted successfully.'
         }
         #swagger.responses[400]
+        #swagger.responses[401]
         #swagger.responses[404]
     */
    try {
